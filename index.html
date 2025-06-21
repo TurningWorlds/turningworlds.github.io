@@ -510,7 +510,7 @@
       spiritualbutnotreligious: {
         name: "Spiritual But Not Religious",
         beliefs: "You meditate, read self-help books, and believe in 'something' but not organized religion.",
-        quote: "“Religion is for people who are afraid of going to hell. Spirituality is for those who've been there.” (Vine Deloria Jr.)",
+        quote: ""Religion is for people who are afraid of going to hell. Spirituality is for those who've been there." (Vine Deloria Jr.)",
         people: "Oprah Winfrey, Elizabeth Gilbert"
       }
     };
@@ -551,8 +551,8 @@
       document.getElementById('btn-group').style.display = 'none';
       document.getElementById('result-section').innerHTML = `
         <div class="result">
-          <div><strong>You are an ${r.name}.</strong></div>
-          <div style="margin: 10px 0 0 0;"><strong>What they believe in:</strong> ${r.beliefs}</div>
+          <div><strong>You are ${r.name.startsWith('A') || r.name.startsWith('E') || r.name.startsWith('I') || r.name.startsWith('O') || r.name.startsWith('U') ? 'an' : 'a'} ${r.name}.</strong></div>
+          <div style="margin: 10px 0 0 0;"><strong>What they believe:</strong> ${r.beliefs}</div>
           <blockquote>${r.quote}</blockquote>
           <div><strong>Notable people:</strong> ${r.people}</div>
           ${bibleLine}
