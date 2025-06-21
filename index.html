@@ -509,4 +509,59 @@
       },
       spiritualbutnotreligious: {
         name: "Spiritual But Not Religious",
-        beliefs: "You meditate, read self-help books, and believe in 's
+        beliefs: "You meditate, read self-help books, and believe in 'something' but not organized religion.",
+        quote: "“Religion is for people who are afraid of going to hell. Spirituality is for those who've been there.” (Vine Deloria Jr.)",
+        people: "Oprah Winfrey, Elizabeth Gilbert"
+      }
+    };
+
+    // Quiz state
+    let current = 0;
+
+    function renderQuestion(idx) {
+      const q = questions[idx];
+      document.getElementById('result-section').innerHTML = '';
+      document.getElementById('question-section').innerHTML = `
+        <div class="question">${q.text}</div>
+        <div class="dropdown">
+          <details>
+            <summary>What does this mean?</summary>
+            <div>${q.explain}</div>
+          </details>
+        </div>
+      `;
+      document.getElementById('btn-group').style.display = 'flex';
+    }
+
+    function answer(isYes) {
+      let q = questions[current];
+      let next = isYes ? q.yes : q.no;
+      if (typeof next === 'string') {
+        showResult(next);
+      } else {
+        current = next;
+        renderQuestion(current);
+      }
+    }
+
+    function showResult(key) {
+      const r = results[key];
+      let bibleLine = r.bible ? `<div><strong>Bible version:</strong> ${r.bible}</div>` : '';
+      document.getElementById('question-section').innerHTML = '';
+      document.getElementById('btn-group').style.display = 'none';
+      document.getElementById('result-section').innerHTML = `
+        <div class="result">
+          <div><strong>You are an ${r.name}.</strong></div>
+          <div style="margin: 10px 0 0 0;"><strong>What they believe in:</strong> ${r.beliefs}</div>
+          <blockquote>${r.quote}</blockquote>
+          <div><strong>Notable people:</strong> ${r.people}</div>
+          ${bibleLine}
+        </div>
+      `;
+    }
+
+    // Start quiz
+    renderQuestion(current);
+  </script>
+</body>
+</html>
