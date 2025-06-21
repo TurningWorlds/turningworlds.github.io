@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Faith Finder: The Ultra-Specific Religion Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .quiz-container {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 6px 32px rgba(40,80,120,0.13);
+      max-width: 540px;
+      width: 100%;
+      padding: 36px 28px 28px 28px;
+      text-align: center;
+      margin: 28px;
+      border: 1.5px solid #e4e9f2;
+    }
+    .quiz-title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #2b5d8c;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .quiz-desc {
+      font-size: 1.08rem;
+      color: #4a4a4a;
+      margin-bottom: 24px;
+      line-height: 1.6;
+      background: #f4f8fc;
+      border-radius: 7px;
+      padding: 14px 12px;
+    }
+    .question {
+      font-size: 1.12rem;
+      margin-bottom: 16px;
+      font-weight: 600;
+      color: #23406e;
+    }
+    .dropdown {
+      margin-bottom: 24px;
+    }
+    details summary {
+      cursor: pointer;
+      color: #007bff;
+      font-size: 1rem;
+      margin-bottom: 8px;
+      outline: none;
+      transition: color 0.2s;
+    }
+    details summary:hover {
+      color: #0056b3;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-bottom: 16px;
+    }
+    .btn {
+      padding: 12px 32px;
+      font-size: 1.15rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      outline: none;
+      box-shadow: 0 2px 8px rgba(44, 112, 180, 0.09);
+    }
+    .btn-yes {
+      background: #32d96b;
+      color: #fff;
+    }
+    .btn-yes:hover {
+      background: #28b85b;
+      box-shadow: 0 4px 16px rgba(50,217,107,0.13);
+    }
+    .btn-no {
+      background: #ff5a5a;
+      color: #fff;
+    }
+    .btn-no:hover {
+      background: #e03c3c;
+      box-shadow: 0 4px 16px rgba(255,90,90,0.13);
+    }
+    .result {
+      margin-top: 24px;
+      padding: 24px 12px;
+      background: #f3f7f6;
+      border-radius: 12px;
+      text-align: left;
+      font-size: 1.1rem;
+      animation: fadeIn 0.7s;
+      border: 1.2px solid #d0e4f7;
+    }
+    .result strong {
+      color: #007b83;
+      font-size: 1.22rem;
+    }
+    .result blockquote {
+      margin: 12px 0;
+      padding-left: 12px;
+      border-left: 3px solid #007b83;
+      color: #3a3a3a;
+      font-style: italic;
+      background: #eef6f7;
+      border-radius: 4px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(24px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container" id="quiz">
+    <div class="quiz-title">Faith Finder: The Ultra-Specific Religion Quiz</div>
+    <div class="quiz-desc">
+      Ever wondered where you truly fit on the vast spectrum of faith, spirituality, and quirky religious traditions? <br><br>
+      <b>Faith Finder</b> is the most detailed yes/no flowchart quiz designed to match you with a religious identity based on your beliefs, habits, and even your taste in potlucks and music. <br>
+      Answer each question honestly—no matter how oddly specific!—and discover your spiritual tribe, from ancient traditions to modern movements and everything in between.
+    </div>
+    <div id="question-section"></div>
+    <div class="btn-group" id="btn-group">
+      <button class="btn btn-yes" onclick="answer(true)">Yes</button>
+      <button class="btn btn-no" onclick="answer(false)">No</button>
+    </div>
+    <div id="result-section"></div>
+  </div>
+  <script>
+    // Hyper-specific flowchart questions
+    const questions = [
+      {
+        text: "Do you believe God cares whether you eat pork or shellfish?",
+        explain: "This asks if you follow dietary laws found in Judaism, Islam, Seventh-day Adventism, or some Christian sects.",
+        yes: 1,
+        no: 8
+      },
+      {
+        text: "Do you avoid mixing meat and dairy in the same meal?",
+        explain: "This is a uniquely Jewish kosher law.",
+        yes: "orthodoxjew",
+        no: 2
+      },
+      {
+        text: "Do you break your daily fast with dates and pray five times facing Mecca?",
+        explain: "These are specific Islamic practices.",
+        yes: 3,
+        no: 4
+      },
+      {
+        text: "Do you belong to a group that avoids music and images in worship?",
+        explain: "This is characteristic of some conservative Islamic and Jewish groups.",
+        yes: "salafi",
+        no: "sunni"
+      },
+      {
+        text: "Do you worship on Saturday, avoid caffeine, and bring a casserole to potlucks?",
+        explain: "This is a very Seventh-day Adventist thing.",
+        yes: "adventist",
+        no: 5
+      },
+      {
+        text: "Do you wear sacred undergarments and believe in baptizing the dead?",
+        explain: "These are distinctive practices of Latter-day Saints (Mormons).",
+        yes: "lds",
+        no: 6
+      },
+      {
+        text: "Do you believe the Eucharist literally becomes the body and blood of Christ, and you love incense?",
+        explain: "This is a very Catholic and Orthodox belief, but incense is especially loved in the East.",
+        yes: 7,
+        no: "mainlineprotestant"
+      },
+      {
+        text: "Do you venerate icons, stand for hours in church, and eat blessed bread (antidoron) after service?",
+        explain: "These are classic Eastern Orthodox practices.",
+        yes: "russianorthodox",
+        no: "roman_catholic"
+      },
+      {
+        text: "Do you believe Jesus is not God, but a created being, and you hand out literature door-to-door?",
+        explain: "This is a hallmark of Jehovah's Witnesses.",
+        yes: "jwitness",
+        no: 9
+      },
+      {
+        text: "Do you believe in the Trinity and sing hymns accompanied by a pipe organ?",
+        explain: "This is typical of mainline Protestant churches.",
+        yes: 10,
+        no: 13
+      },
+      {
+        text: "Do you baptize babies, recite creeds, and celebrate Christmas with Advent wreaths?",
+        explain: "This is a Lutheran and Anglican thing.",
+        yes: 11,
+        no: 12
+      },
+      {
+        text: "Do you love Martin Luther, sing 'A Mighty Fortress,' and eat bratwurst at church picnics?",
+        explain: "This is classic Lutheran culture.",
+        yes: "lutheran",
+        no: "anglican"
+      },
+      {
+        text: "Do you have bishops, love tea and scones, and sometimes call yourself 'Episcopalian'?",
+        explain: "This is the Anglican/Episcopal tradition.",
+        yes: "anglican",
+        no: "presbyterian"
+      },
+      {
+        text: "Do you believe in predestination, have elders instead of bishops, and enjoy Scottish heritage?",
+        explain: "This is the Presbyterian tradition.",
+        yes: "presbyterian",
+        no: 14
+      },
+      {
+        text: "Do you avoid musical instruments in worship, and do you call your church simply 'the church'?",
+        explain: "This is typical of Churches of Christ.",
+        yes: "cofc",
+        no: 15
+      },
+      {
+        text: "Do you believe in speaking in tongues, faith healing, and lively worship with electric guitars?",
+        explain: "This is classic Pentecostal/Charismatic Christianity.",
+        yes: "pentecostal",
+        no: 16
+      },
+      {
+        text: "Do you believe in adult baptism by full immersion and love potluck dinners?",
+        explain: "This is a Baptist thing.",
+        yes: 17,
+        no: 18
+      },
+      {
+        text: "Do you believe the King James Bible is the only true English Bible?",
+        explain: "This is a distinctive of King James Only Baptists.",
+        yes: "kjvonly",
+        no: "baptist"
+      },
+      {
+        text: "Do you believe in the Real Presence in Communion but not transubstantiation?",
+        explain: "This is a Lutheran belief.",
+        yes: "lutheran",
+        no: "methodist"
+      },
+      {
+        text: "Do you believe in karma, reincarnation, and avoid eating onions and garlic?",
+        explain: "This is a Jain or some Hindu practice.",
+        yes: 19,
+        no: 22
+      },
+      {
+        text: "Do you sweep the ground before you walk and wear a mask to avoid harming tiny beings?",
+        explain: "This is a Jain ascetic practice.",
+        yes: "jainmonk",
+        no: 20
+      },
+      {
+        text: "Do you worship Krishna, celebrate Holi, and chant Hare Krishna?",
+        explain: "This is the ISKCON (Hare Krishna) movement.",
+        yes: "harekrishna",
+        no: 21
+      },
+      {
+        text: "Do you worship Shiva, fast on Mondays, and wear rudraksha beads?",
+        explain: "These are Shaivite Hindu practices.",
+        yes: "shaivite",
+        no: "hindu"
+      },
+      {
+        text: "Do you meditate on emptiness, eat only vegetarian food, and wear maroon robes?",
+        explain: "This is a Tibetan Buddhist monk thing.",
+        yes: "tibetanbuddhist",
+        no: 23
+      },
+      {
+        text: "Do you believe in the Eightfold Path, meditate daily, and ring a bell to start worship?",
+        explain: "This is a Zen Buddhist practice.",
+        yes: "zenbuddhist",
+        no: 24
+      },
+      {
+        text: "Do you believe in kami, clap twice before praying, and visit shrines for New Year?",
+        explain: "This is Shinto.",
+        yes: "shinto",
+        no: 25
+      },
+      {
+        text: "Do you cast circles, celebrate Beltane, and call yourself a witch?",
+        explain: "This is Wicca.",
+        yes: "wicca",
+        no: 26
+      },
+      {
+        text: "Do you believe the Flying Spaghetti Monster created the world?",
+        explain: "This is Pastafarianism—a parody religion.",
+        yes: "pastafarian",
+        no: 27
+      },
+      {
+        text: "Do you not believe in any gods, but celebrate Darwin Day and love science?",
+        explain: "This is secular humanism/atheism.",
+        yes: "atheist",
+        no: 28
+      },
+      {
+        text: "Do you think the answer to everything is 'I don't know' and love a good debate?",
+        explain: "This is agnosticism.",
+        yes: "agnostic",
+        no: "spiritualbutnotreligious"
+      }
+    ];
+
+    // Ultra-specific results!
+    const results = {
+      orthodoxjew: {
+        name: "Orthodox Jew",
+        beliefs: "You keep kosher, follow halacha, and observe the Sabbath from sundown Friday. You value tradition and study Torah.",
+        quote: "“Remember the Sabbath day, to keep it holy.” (Exodus 20:8)",
+        people: "Maimonides, Rabbi Jonathan Sacks"
+      },
+      salafi: {
+        name: "Salafi Muslim",
+        beliefs: "You follow a strict interpretation of Islam, avoid music and images, and focus on the Qur'an and Sunnah.",
+        quote: "“And hold firmly to the rope of Allah all together and do not become divided.” (Qur’an 3:103)",
+        people: "Muhammad ibn Abd al-Wahhab"
+      },
+      sunni: {
+        name: "Sunni Muslim",
+        beliefs: "You follow the Five Pillars, pray five times daily, and celebrate Eid with family and friends.",
+        quote: "“Indeed, prayer prohibits immorality and wrongdoing.” (Qur’an 29:45)",
+        people: "Malala Yousafzai, Recep Tayyip Erdoğan"
+      },
+      adventist: {
+        name: "Seventh-day Adventist",
+        beliefs: "You worship on Saturday, avoid unclean foods, and focus on Jesus’ soon return.",
+        quote: "“Remember the Sabbath day, to keep it holy.” (Exodus 20:8)",
+        people: "Desmond Doss, Ben Carson",
+        bible: "You read the New King James Version (NKJV) or Clear Word Bible."
+      },
+      lds: {
+        name: "Latter-day Saint (Mormon)",
+        beliefs: "You believe in the Book of Mormon, continuing revelation, and sacred undergarments.",
+        quote: "“If any of you lack wisdom, let him ask of God...” (James 1:5, KJV; cited in Joseph Smith’s story)",
+        people: "Joseph Smith, Mitt Romney",
+        bible: "You read the KJV and the Book of Mormon."
+      },
+      roman_catholic: {
+        name: "Roman Catholic",
+        beliefs: "You believe in the Trinity, the authority of the Pope, and the sacraments. You love incense and Gregorian chant.",
+        quote: "“For where two or three are gathered in my name, there am I among them.” (Matthew 18:20, Douay-Rheims)",
+        people: "Pope Francis, Mother Teresa",
+        bible: "You read the Douay-Rheims or New American Bible."
+      },
+      russianorthodox: {
+        name: "Russian Orthodox Christian",
+        beliefs: "You venerate icons, stand for long liturgies, and eat blessed bread after service.",
+        quote: "“Christ is risen from the dead, trampling down death by death!” (Paschal Troparion)",
+        people: "Sergei Rachmaninoff, Patriarch Kirill",
+        bible: "You read the Orthodox Study Bible (Septuagint)."
+      },
+      mainlineprotestant: {
+        name: "Mainline Protestant",
+        beliefs: "You value tradition, social justice, and sing hymns with a pipe organ.",
+        quote: "“Let justice roll down like waters, and righteousness like an ever-flowing stream.” (Amos 5:24, NRSV)",
+        people: "Desmond Tutu, Dietrich Bonhoeffer",
+        bible: "You read the New Revised Standard Version (NRSV) or NIV."
+      },
+      jwitness: {
+        name: "Jehovah’s Witness",
+        beliefs: "You believe Jesus is not God but God’s first creation, and you share your beliefs door-to-door.",
+        quote: "“This means everlasting life, their coming to know you, the only true God, and the one whom you sent, Jesus Christ.” (John 17:3, NWT)",
+        people: "Michael Jackson, Serena Williams"
+      },
+      lutheran: {
+        name: "Lutheran",
+        beliefs: "You love Martin Luther, sing hymns, and enjoy bratwurst at church picnics.",
+        quote: "“A mighty fortress is our God.” (Martin Luther)",
+        people: "Martin Luther, Dietrich Bonhoeffer",
+        bible: "You read the New Revised Standard Version (NRSV) or ESV."
+      },
+      anglican: {
+        name: "Anglican/Episcopalian",
+        beliefs: "You love tea, scones, bishops, and the Book of Common Prayer.",
+        quote: "“Let your light so shine before men...” (Matthew 5:16, KJV)",
+        people: "Queen Elizabeth II, Desmond Tutu",
+        bible: "You read the New Revised Standard Version (NRSV) or King James Version (KJV)."
+      },
+      presbyterian: {
+        name: "Presbyterian",
+        beliefs: "You believe in predestination, have elders, and enjoy Scottish heritage.",
+        quote: "“The Lord is my shepherd; I shall not want.” (Psalm 23:1, KJV)",
+        people: "John Knox, Fred Rogers",
+        bible: "You read the New International Version (NIV) or ESV."
+      },
+      cofc: {
+        name: "Church of Christ",
+        beliefs: "You avoid musical instruments in worship and call your church simply 'the church.'",
+        quote: "“Sing and make music from your heart to the Lord.” (Ephesians 5:19, NIV)",
+        people: "Max Lucado, Lipscomb University faculty",
+        bible: "You read the New American Standard Bible (NASB) or NIV."
+      },
+      pentecostal: {
+        name: "Pentecostal/Charismatic",
+        beliefs: "You believe in speaking in tongues, faith healing, and lively worship.",
+        quote: "“And they were all filled with the Holy Spirit and began to speak in other tongues...” (Acts 2:4, ESV)",
+        people: "William J. Seymour, T.D. Jakes",
+        bible: "You read the New King James Version (NKJV) or ESV."
+      },
+      kjvonly: {
+        name: "KJV-Only Baptist",
+        beliefs: "You believe the King James Version is the only true English Bible and love fiery preaching.",
+        quote: "“For God so loved the world, that he gave his only begotten Son...” (John 3:16, KJV)",
+        people: "Jack Hyles, Peter Ruckman",
+        bible: "You read the King James Version (KJV)."
+      },
+      baptist: {
+        name: "Baptist",
+        beliefs: "You believe in adult baptism by immersion and love potluck dinners.",
+        quote: "“Repent and be baptized, every one of you…” (Acts 2:38, NIV)",
+        people: "Charles Spurgeon, Martin Luther King Jr.",
+        bible: "You read the New International Version (NIV) or KJV."
+      },
+      methodist: {
+        name: "Methodist",
+        beliefs: "You believe in grace, social justice, and sing Charles Wesley hymns.",
+        quote: "“The best of all is, God is with us.” (John Wesley)",
+        people: "John Wesley, Hillary Clinton",
+        bible: "You read the Common English Bible (CEB) or NRSV."
+      },
+      jainmonk: {
+        name: "Jain Monk",
+        beliefs: "You sweep the ground before you walk, wear a mask, and practice extreme non-violence.",
+        quote: "“Non-violence is the highest religion.” (Mahavira)",
+        people: "Mahavira, Acharya Tulsi"
+      },
+      harekrishna: {
+        name: "Hare Krishna (ISKCON)",
+        beliefs: "You worship Krishna, chant Hare Krishna, and celebrate Holi.",
+        quote: "“Hare Krishna, Hare Krishna, Krishna Krishna, Hare Hare.” (Maha Mantra)",
+        people: "A.C. Bhaktivedanta Swami Prabhupada"
+      },
+      shaivite: {
+        name: "Shaivite Hindu",
+        beliefs: "You worship Shiva, wear rudraksha beads, and fast on Mondays.",
+        quote: "“Om Namah Shivaya.”",
+        people: "Adi Shankara, Sadhguru"
+      },
+      hindu: {
+        name: "Hindu",
+        beliefs: "You believe in many gods, karma, and reincarnation.",
+        quote: "“Truth is one; sages call it by various names.” (Rig Veda 1.164.46)",
+        people: "Mahatma Gandhi, A. R. Rahman"
+      },
+      tibetanbuddhist: {
+        name: "Tibetan Buddhist Monk",
+        beliefs: "You meditate on emptiness, wear maroon robes, and eat only vegetarian food.",
+        quote: "“All that we are is the result of what we have thought.” (Dhammapada)",
+        people: "Dalai Lama, Thich Nhat Hanh"
+      },
+      zenbuddhist: {
+        name: "Zen Buddhist",
+        beliefs: "You meditate daily, ring a bell to start worship, and value simplicity.",
+        quote: "“Sitting quietly, doing nothing, spring comes, and the grass grows by itself.” (Zen proverb)",
+        people: "Shunryu Suzuki, Dogen"
+      },
+      shinto: {
+        name: "Shinto",
+        beliefs: "You believe in kami, clap before praying, and visit shrines for New Year.",
+        quote: "“Even the wishes of an ant reach to heaven.” (Shinto proverb)",
+        people: "Emperor Meiji, contemporary Shinto priests"
+      },
+      wicca: {
+        name: "Wiccan / Pagan",
+        beliefs: "You cast circles, celebrate Beltane, and call yourself a witch.",
+        quote: "“An it harm none, do what ye will.” (Wiccan Rede)",
+        people: "Gerald Gardner, Doreen Valiente"
+      },
+      pastafarian: {
+        name: "Pastafarian",
+        beliefs: "You believe the Flying Spaghetti Monster created the world, and wear a colander on your head.",
+        quote: "“May you be touched by His Noodly Appendage.”",
+        people: "Bobby Henderson"
+      },
+      atheist: {
+        name: "Atheist / Secular Humanist",
+        beliefs: "You don't believe in gods, but love science and celebrate Darwin Day.",
+        quote: "“We are responsible for our own lives.” (Carl Sagan)",
+        people: "Richard Dawkins, Carl Sagan"
+      },
+      agnostic: {
+        name: "Agnostic",
+        beliefs: "You’re not sure if there are gods, and love a good debate.",
+        quote: "“I do not pretend to know where many ignorant men are sure.” (Clarence Darrow)",
+        people: "Neil deGrasse Tyson, Susan Blackmore"
+      },
+      spiritualbutnotreligious: {
+        name: "Spiritual But Not Religious",
+        beliefs: "You meditate, read self-help books, and believe in 's
