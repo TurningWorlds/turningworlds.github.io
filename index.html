@@ -224,20 +224,84 @@ const questions = [
     no: "roman_catholic"
   },
   {
-    id: "q9",
-    text: "Do you believe Jesus is God's first created being (not God himself), and you spend weekends going door-to-door with Watchtower magazines?",
-    explain: "This is a hallmark belief and practice of Jehovah's Witnesses.",
-    yes: "jwitness",
-    no: 10
-  },
-  {
-    id: "q10",
-    text: "Do you believe in the Trinity doctrine and sing traditional hymns accompanied by a massive pipe organ every Sunday?",
-    explain: "This is typical of mainline Protestant churches with their liturgical traditions.",
-    yes: 11,
-    no: 14
-  },
-  {
+{
+  id: "q9",
+  text: "Do you believe Jesus is God's first creation (not co-equal with God), reject the Trinity, and regularly evangelize using Watchtower materials?",
+  explain: "These are central tenets and practices of Jehovah's Witnesses.",
+  yes: "q100",
+  no: "q10"
+},
+{
+  id: "q100",
+  text: "Do you recognize the current Governing Body of Jehovah's Witnesses in Warwick, New York as God's sole channel of communication on Earth?",
+  explain: "Mainline Jehovah's Witnesses believe that the Governing Body uniquely interprets God's will.",
+  yes: "jwitness",
+  no: "q101"
+},
+{
+  id: "q101",
+  text: "Do you believe Charles Taze Russell, the founder of the movement, was the 'faithful and wise servant' and that his teachings were later corrupted by the Watchtower Society?",
+  explain: "Many early offshoots view Russell's original doctrines as pure and reject the changes implemented after his death.",
+  yes: "bible_students",
+  no: "q102"
+},
+{
+  id: "q102",
+  text: "Do you emphasize personal Bible study, believe the 'Studies in the Scriptures' are essential, but reject any central authority like the Watchtower?",
+  explain: "Many independent Bible Student congregations maintain Russell’s theology while rejecting hierarchical control.",
+  yes: "associated_bible_students",
+  no: "q103"
+},
+{
+  id: "q103",
+  text: "Do you believe the writings of Charles Taze Russell, especially the 'Studies in the Scriptures', are divinely inspired and final revelation?",
+  explain: "This belief is typical of strict Russellites who essentially canonize his work.",
+  yes: "russellite",
+  no: "q104"
+},
+{
+  id: "q104",
+  text: "Do you follow the teachings of Paul S. L. Johnson, a former Watchtower leader who founded a prophetic ministry after Russell’s death?",
+  explain: "Paul Johnson founded the Laymen's Home Missionary Movement, a major early schism from the Watchtower.",
+  yes: "lhmm",
+  no: "q105"
+},
+{
+  id: "q105",
+  text: "Do you align with the Dawn Bible Students Association and believe in a literal millennial reign, but not in Russell's infallibility?",
+  explain: "The Dawn Bible Students formed to promote Bible study without endorsing Russell as an infallible prophet.",
+  yes: "dawn_bible_students",
+  no: "q106"
+},
+{
+  id: "q106",
+  text: "Do you reject the Watchtower but still adhere to core JW doctrines like soul sleep, annihilationism, and door-to-door preaching?",
+  explain: "These groups share doctrinal roots with Jehovah's Witnesses but reject their leadership.",
+  yes: "jw_reform",
+  no: "q107"
+},
+{
+  id: "q107",
+  text: "Do you believe in Adam Rutherford's teachings, including 6000-year dispensational timelines and pyramidology?",
+  explain: "Rutherford (not to be confused with J.F. Rutherford) led the Christian Millennial Fellowship, a fringe group with apocalyptic emphasis.",
+  yes: "cmf",
+  no: "q108"
+},
+{
+  id: "q108",
+  text: "Do you actively oppose Jehovah's Witness teachings and seek to convert them to mainstream Christianity using Biblical apologetics?",
+  explain: "Many ex-JWs join Evangelical counter-cult ministries dedicated to refuting Watchtower doctrine.",
+  yes: "exjw_evangelical",
+  no: "q10"
+},
+{
+  id: "q10",
+  text: "Do you believe in the Trinity and attend worship services that include traditional hymns and pipe organ music?",
+  explain: "This is typical of historic Protestant denominations with formal worship structures.",
+  yes: 11,
+  no: 14
+}
+{
     id: "q11",
     text: "Do you baptize infants by sprinkling, recite ancient creeds from memory, and decorate with Advent wreaths at Christmas?",
     explain: "This is a Lutheran and Anglican liturgical tradition.",
@@ -427,12 +491,60 @@ const results = {
     people: "Desmond Tutu, Dietrich Bonhoeffer, Martin Luther King Jr.",
     bible: "You read the New Revised Standard Version (NRSV), Common English Bible, or NIV with study notes."
   },
-  jwitness: {
-    name: "Jehovah's Witness",
-    beliefs: "You believe Jesus is God's first creation (not God himself), reject the Trinity doctrine, refuse blood transfusions, and actively share your beliefs door-to-door. You attend Kingdom Hall meetings and anticipate God's Kingdom on Earth.",
-    quote: "This means everlasting life, their coming to know you, the only true God, and the one whom you sent, Jesus Christ. (John 17:3, New World Translation)",
-    people: "Charles Taze Russell, Judge Rutherford, contemporary Governing Body members"
-  },
+jwitness: {
+  name: "Jehovah's Witness",
+  beliefs: "You believe Jesus is God's first creation, not divine himself. You reject the Trinity, celebrate no holidays, and believe only 144,000 will go to heaven. You preach door-to-door with Watchtower literature and follow the Governing Body in Warwick as God's sole channel.",
+  quote: "This good news of the kingdom will be preached in all the inhabited earth for a witness to all the nations, and then the end will come. (Matthew 24:14, NWT)",
+  people: "Joseph F. Rutherford, Anthony Morris III, David Splane"
+},
+bible_students: {
+  name: "Independent Bible Student",
+  beliefs: "You revere Charles Taze Russell’s early teachings but reject the post-1917 direction of the Watchtower Society. You focus on prophecy, chronology, and personal Bible study without centralized authority.",
+  quote: "The harvest is the end of the age, and the reapers are angels. (Matthew 13:39)",
+  people: "Charles Taze Russell, Nelson Barbour"
+},
+associated_bible_students: {
+  name: "Associated Bible Students",
+  beliefs: "You belong to a decentralized group that values congregational autonomy, Russell’s early works, and deep Bible study. You reject authoritarian leadership while keeping some original doctrines alive.",
+  quote: "Prove all things; hold fast that which is good. (1 Thessalonians 5:21)",
+  people: "Benjamin Barton, various anonymous elders"
+},
+russellite: {
+  name: "Russellite",
+  beliefs: "You hold Charles Taze Russell’s writings, especially the 'Studies in the Scriptures', as divinely guided and final. You see him as a prophet-like figure or the 'faithful and wise servant' from Matthew 24.",
+  quote: "God has had one mouthpiece on Earth in every age. In this age, it was Brother Russell. (Paraphrased early Bible Student teaching)",
+  people: "Charles Taze Russell"
+},
+lhmm: {
+  name: "Laymen’s Home Missionary Movement Follower",
+  beliefs: "You follow Paul S. L. Johnson, who broke from the Watchtower after Russell’s death. You believe he carried forward true divine insight and continue distributing his writings through the LHMM.",
+  quote: "The light shines more and more unto the perfect day. (Proverbs 4:18)",
+  people: "Paul S. L. Johnson, Raymond Jolly"
+},
+dawn_bible_students: {
+  name: "Dawn Bible Student",
+  beliefs: "You emphasize a return to early Watchtower teachings without Russell worship. You publish 'The Dawn' magazine and promote peaceful Bible study and personal interpretation of prophecy.",
+  quote: "Ye shall know the truth, and the truth shall make you free. (John 8:32)",
+  people: "Norman Woodworth, Charles Taze Russell"
+},
+jw_reform: {
+  name: "Jehovah’s Witness Reformist",
+  beliefs: "You agree with many JW doctrines like non-Trinitarianism, soul sleep, and kingdom hope but question the authority or decisions of the Governing Body. You may be ‘inactive’ or form support communities online.",
+  quote: "Let all things be done decently and in order. (1 Corinthians 14:40)",
+  people: "ExJW activists, Reddit r/exjw community, Ray Franz (former GB member)"
+},
+cmf: {
+  name: "Christian Millennial Fellowship Member",
+  beliefs: "You believe in prophetic chronology, pyramidology, and 6000-year dispensational ages. You were influenced by Adam Rutherford’s apocalyptic visions and independent theology after Russell.",
+  quote: "The secret things belong unto the Lord our God. (Deuteronomy 29:29)",
+  people: "Adam Rutherford, early CMF leaders"
+},
+exjw_evangelical: {
+  name: "Evangelical Ex-Jehovah's Witness",
+  beliefs: "You left the Watchtower and now expose its teachings through apologetics. You believe in the Trinity, salvation by grace, and eternal judgment. You often work in ministries aimed at helping others leave the JW faith.",
+  quote: "For it is by grace you have been saved, through faith... not by works. (Ephesians 2:8-9)",
+  people: "David A. Reed, Watchman Fellowship, Eric 'JW Answers'"
+},
   lutheran: {
     name: "Lutheran",
     beliefs: "You cherish Martin Luther's legacy, believe in salvation by grace alone through faith alone, practice infant baptism, and sing robust hymns like 'A Mighty Fortress Is Our God.' You appreciate both Word and Sacrament in worship.",
