@@ -149,8 +149,8 @@
     </div>
     <div id="question-section"></div>
     <div class="btn-group" id="btn-group">
-      <button class="btn btn-yes" onclick="answer(true)">Yes</button>
-      <button class="btn btn-no" onclick="answer(false)">No</button>
+      <button class="btn btn-yes" id="yes-btn">Yes</button>
+      <button class="btn btn-no" id="no-btn">No</button>
     </div>
     <div id="result-section"></div>
   </div>
@@ -521,4 +521,101 @@
       },
       agnostic: {
         name: "Agnostic",
-        beliefs: "You're not sure if there are gods, and love a good
+        beliefs: "You're not sure if there are gods, and love a good debate.",
+        quote: "I do not pretend to know where many ignorant men are sure. (Clarence Darrow)",
+        people: "Neil deGrasse Tyson, Susan Blackmore"
+      },
+      spiritualbutnotreligious: {
+        name: "Spiritual But Not Religious",
+        beliefs: "You meditate, read self-help books, and believe in something greater without organized religion.",
+        quote: "The divine is within you.",
+        people: "Oprah Winfrey, Deepak Chopra"
+      }
+    };
+
+    function showQuestion(index) {
+      const question = questions[index];
+      const questionSection = document.getElementById('question-section');
+      
+      questionSection.innerHTML = `
+        <div class="question">${question.text}</div>
+        <div class="dropdown">
+          <details>
+            <summary>Why this question?</summary>
+            <p>${question.explain}</p>
+          </details>
+        </div>
+      `;
+    }
+
+    function showResult(resultKey) {
+      const result = results[resultKey];
+      const resultSection = document.getElementById('result-section');
+      const btnGroup = document.getElementById('btn-group');
+      
+      btnGroup.style.display = 'none';
+      
+      let resultHTML = `
+        <div class="result">
+          <strong>${result.name}</strong>
+          <p>${result.beliefs}</p>
+          <blockquote>${result.quote}</blockquote>
+          <p><strong>Notable People:</strong> ${result.people}</p>
+      `;
+      
+      if (result.bible) {
+        resultHTML += `<p><strong>Scripture:</strong> ${result.bible}</p>`;
+      }
+      
+      resultHTML += `
+          <button class="restart-btn" onclick="restart()">Take Quiz Again</button>
+        </div>
+      `;
+      
+      resultSection.innerHTML = resultHTML;
+    }
+
+    function answer(isYes) {
+      const question = questions[currentQuestion];
+      const nextStep = isYes ? question.yes : question.no;
+      
+      if (typeof nextStep === 'string') {
+        // It's a result key
+        showResult(nextStep);
+      } else {
+        // It's a question index
+        currentQuestion = nextStep;
+        showQuestion(currentQuestion);
+      }
+    }
+
+    function restart() {
+      currentQuestion = 0;
+      document.getElementById('result-section').innerHTML = '';
+      document.getElementById('btn-group').style.display = 'flex';
+      showQuestion(currentQuestion);
+    }
+
+    function setupEventListeners() {
+      const yesBtn = document.getElementById('yes-btn');
+      const noBtn = document.getElementById('no-btn');
+      
+      if (yesBtn && noBtn) {
+        yesBtn.addEventListener('click', function() {
+          answer(true);
+        });
+        
+        noBtn.addEventListener('click', function() {
+          answer(false);
+        });
+      }
+    }
+
+    // Initialize the quiz when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      showQuestion(currentQuestion);
+      setupEventListeners();
+    });
+  </script>
+</body>
+</html>
