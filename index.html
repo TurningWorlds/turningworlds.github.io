@@ -304,7 +304,7 @@ const questions = [
     id: "q20",
     text: "Do you believe in karma and reincarnation, and completely avoid eating onions, garlic, and anything that grows underground?",
     explain: "This specific dietary restriction points to Jainism or certain strict Hindu practices.",
-    yes: 20,
+    yes: 21,
     no: 23
   },
   {
@@ -312,14 +312,14 @@ const questions = [
     text: "Do you literally sweep the ground before walking to avoid stepping on insects, and wear a cloth mask to prevent accidentally inhaling tiny organisms?",
     explain: "This is the extreme non-violence practice of Jain ascetics and monks.",
     yes: "jainmonk",
-    no: 21
+    no: 22
   },
   {
     id: "q22",
     text: "Do you worship Krishna as the supreme deity, chant 'Hare Krishna' regularly, and throw colored powder during Holi festival?",
     explain: "This is the ISKCON (Hare Krishna) movement with its devotional practices.",
     yes: "harekrishna",
-    no: 22
+    no: "jain"
   },
   {
     id: "q23",
@@ -333,235 +333,253 @@ const questions = [
     text: "Do you meditate daily on the concept of emptiness, eat only vegetarian food, and wear maroon or saffron robes?",
     explain: "This describes Tibetan Buddhist monastic life and philosophy.",
     yes: "tibetanbuddhist",
-    no: 24
+    no: "theravadabuddhist"
   },
   {
     id: "q25",
     text: "Do you practice zazen (sitting meditation), believe enlightenment comes suddenly, and ring a bell to begin meditation sessions?",
     explain: "This is specifically Zen Buddhist practice and philosophy.",
     yes: "zenbuddhist",
-    no: "shinto"
+    no: 26
   },
   {
     id: "q26",
     text: "Are you drawn to nature-based spirituality, cast protective circles for rituals, and celebrate the eight Sabbats including Beltane and Samhain?",
     explain: "This describes Wiccan and modern pagan practices.",
-    yes: 26,
-    no: 27
+    yes: 27,
+    no: 28
   },
   {
     id: "q27",
     text: "Do you call yourself a witch, worship both a God and Goddess, and keep a Book of Shadows with your spells and rituals?",
     explain: "This is specifically Wiccan practice and belief system.",
     yes: "wicca",
-    no: "spiritualbutnotreligious"
+    no: "neopagan"
   },
   {
     id: "q28",
     text: "Do you think religion is mostly harmful to society, celebrate Darwin Day with enthusiasm, and prefer scientific explanations for everything?",
     explain: "This describes a more activist atheist or secular humanist position.",
     yes: "atheist",
-    no: 28
+    no: 29
   },
   {
     id: "q29",
     text: "Do you think the ultimate answer to questions about God's existence is 'we simply cannot know,' and you love philosophical debates about unknowable things?",
     explain: "This is classic agnosticism - the position that divine knowledge is unknowable.",
     yes: "agnostic",
-    no: "pastafarian"
+    no: "spiritualbutnotreligious"
   }
 ];
-
+    
     // Complete results object
-    const results = {
-      orthodoxjew: {
-        name: "Orthodox Jew",
-        beliefs: "You meticulously keep kosher, follow halakha (Jewish law), observe Shabbat from Friday sundown to Saturday nightfall, and study Torah regularly. You value tradition, community, and maintaining ancient practices in modern times.",
-        quote: "Remember the Sabbath day, to keep it holy. Six days you shall labor and do all your work, but the seventh day is a Sabbath to the Lord your God. (Exodus 20:8-10)",
-        people: "Maimonides, Rabbi Jonathan Sacks, Elie Wiesel"
-      },
-      salafi: {
-        name: "Salafi Muslim",
-        beliefs: "You follow the most conservative interpretation of Sunni Islam, strictly avoiding music, images, and innovations not practiced by the first three generations of Muslims. You focus intensely on the Qur'an and authentic Sunnah.",
-        quote: "And hold firmly to the rope of Allah all together and do not become divided. And remember the favor of Allah upon you... (Qur'an 3:103)",
-        people: "Muhammad ibn Abd al-Wahhab, contemporary Salafi scholars"
-      },
-      sunni: {
-        name: "Sunni Muslim",
-        beliefs: "You follow the Five Pillars of Islam, pray five times daily facing Mecca, fast during Ramadan, and celebrate Eid with family and community. You follow the Sunnah of Prophet Muhammad and accept the first four Caliphs.",
-        quote: "Indeed, prayer prohibits immorality and wrongdoing, and the remembrance of Allah is greater. (Qur'an 29:45)",
-        people: "Malala Yousafzai, Muhammad Ali, Kareem Abdul-Jabbar"
-      },
-      adventist: {
-        name: "Seventh-day Adventist",
-        beliefs: "You worship on Saturday (the biblical Sabbath), follow biblical health principles avoiding unclean foods, and eagerly anticipate Jesus Christ's Second Coming. You emphasize prophecy, health, and education.",
-        quote: "Remember the Sabbath day, to keep it holy. (Exodus 20:8)",
-        people: "Desmond Doss, Ben Carson, Doug Batchelor",
-        bible: "You read the New King James Version (NKJV) or the Clear Word Bible, plus Ellen White's writings."
-      },
-      lds: {
-        name: "Latter-day Saint (Mormon)",
-        beliefs: "You believe in continuing revelation through modern prophets, accept the Book of Mormon as scripture alongside the Bible, wear sacred temple garments, and practice baptism for the dead. You emphasize family, missionary work, and eternal progression.",
-        quote: "If any of you lack wisdom, let him ask of God, that giveth to all men liberally... and it shall be given him. (James 1:5, from Joseph Smith's First Vision account)",
-        people: "Joseph Smith, Mitt Romney, Orrin Hatch",
-        bible: "You read the King James Version Bible and the Book of Mormon as companion scriptures."
-      },
-      roman_catholic: {
-        name: "Roman Catholic",
-        beliefs: "You believe in the Trinity, papal authority, seven sacraments, and transubstantiation. You venerate Mary and saints, attend Mass regularly, and appreciate traditional liturgy with incense, Latin, and Gregorian chant.",
-        quote: "For where two or three are gathered together in my name, there am I in the midst of them. (Matthew 18:20, Douay-Rheims)",
-        people: "Pope Francis, Mother Teresa, Thomas Aquinas",
-        bible: "You read the Douay-Rheims Bible, New American Bible, or Jerusalem Bible with deuterocanonical books."
-      },
-      russianorthodox: {
-        name: "Russian Orthodox Christian",
-        beliefs: "You venerate holy icons, participate in lengthy Divine Liturgies while standing, receive blessed bread (antidoron) after service, and follow the Julian calendar for religious holidays. You emphasize theosis (becoming like God) and mystical tradition.",
-        quote: "Christ is risen from the dead, trampling down death by death, and upon those in the tombs bestowing life! (Paschal Troparion)",
-        people: "Saint Sergius of Radonezh, Patriarch Kirill, Fyodor Dostoevsky",
-        bible: "You read the Orthodox Study Bible based on the Septuagint with Orthodox commentary."
-      },
-      mainlineprotestant: {
-        name: "Mainline Protestant",
-        beliefs: "You value historical Christian tradition balanced with modern scholarship, emphasize social justice and inclusivity, and appreciate liturgical worship with traditional hymns and organ music. You're open to biblical criticism and scientific understanding.",
-        quote: "But let justice roll down like waters, and righteousness like an ever-flowing stream. (Amos 5:24, NRSV)",
-        people: "Desmond Tutu, Dietrich Bonhoeffer, Martin Luther King Jr.",
-        bible: "You read the New Revised Standard Version (NRSV), Common English Bible, or NIV with study notes."
-      },
-      jwitness: {
-        name: "Jehovah's Witness",
-        beliefs: "You believe Jesus is God's first creation (not God himself), reject the Trinity doctrine, refuse blood transfusions, and actively share your beliefs door-to-door. You attend Kingdom Hall meetings and anticipate God's Kingdom on Earth.",
-        quote: "This means everlasting life, their coming to know you, the only true God, and the one whom you sent, Jesus Christ. (John 17:3, New World Translation)",
-        people: "Charles Taze Russell, Judge Rutherford, contemporary Governing Body members"
-      },
-      lutheran: {
-        name: "Lutheran",
-        beliefs: "You cherish Martin Luther's legacy, believe in salvation by grace alone through faith alone, practice infant baptism, and sing robust hymns like 'A Mighty Fortress Is Our God.' You appreciate both Word and Sacrament in worship.",
-        quote: "A mighty fortress is our God, a bulwark never failing. (Martin Luther hymn)",
-        people: "Martin Luther, Dietrich Bonhoeffer, Søren Kierkegaard",
-        bible: "You read the English Standard Version (ESV), New Revised Standard Version (NRSV), or Luther's German translation."
-      },
-      anglican: {
-        name: "Anglican/Episcopalian",
-        beliefs: "You follow the via media (middle way) between Catholicism and Protestantism, use the Book of Common Prayer, appreciate episcopal governance with bishops, and often enjoy British cultural traditions like tea and formal liturgy.",
-        quote: "Almighty God, unto whom all hearts are open, all desires known, and from whom no secrets are hid... (Book of Common Prayer)",
-        people: "Thomas Cranmer, Queen Elizabeth II, Desmond Tutu",
-        bible: "You read the New Revised Standard Version (NRSV) or retain affection for the King James Version."
-      },
-      presbyterian: {
-        name: "Presbyterian",
-        beliefs: "You believe in predestination and God's sovereignty, practice democratic church governance through elected presbyteries, and often celebrate Scottish heritage. You value education, confessional statements, and Reformed theology.",
-        quote: "The Lord is my shepherd; I shall not want. He maketh me to lie down in green pastures. (Psalm 23:1-2, KJV)",
-        people: "John Knox, John Calvin, Fred Rogers ('Mister Rogers')",
-        bible: "You read the New International Version (NIV), English Standard Version (ESV), or New American Standard Bible."
-      },
-      cofc: {
-        name: "Church of Christ",
-        beliefs: "You practice a cappella singing only (no instrumental music), emphasize New Testament Christianity, practice weekly communion, and often simply call your congregation 'the church.' You believe in baptism by immersion for salvation.",
-        quote: "Speaking to one another with psalms, hymns, and songs from the Spirit. Sing and make music from your heart to the Lord. (Ephesians 5:19, NIV)",
-        people: "Alexander Campbell, Max Lucado, Rubel Shelly",
-        bible: "You read the New American Standard Bible (NASB), English Standard Version (ESV), or New King James Version."
-      },
-      pentecostal: {
-        name: "Pentecostal/Charismatic",
-        beliefs: "You believe in baptism in the Holy Spirit evidenced by speaking in tongues, practice divine healing and prophecy, and enjoy contemporary worship with electric instruments. You emphasize spiritual gifts and personal relationship with Jesus.",
-        quote: "And they were all filled with the Holy Spirit and began to speak in other tongues as the Spirit enabled them. (Acts 2:4, NIV)",
-        people: "William J. Seymour, Oral Roberts, T.D. Jakes",
-        bible: "You read the New King James Version (NKJV), New International Version (NIV), or Amplified Bible."
-      },
-      kjvonly: {
-        name: "KJV-Only Baptist",
-        beliefs: "You believe the King James Version is the only accurate English Bible, reject all modern translations as corruptions, and prefer traditional Baptist preaching and hymns. You're often fundamentalist in theology and separatist in practice.",
-        quote: "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life. (John 3:16, KJV)",
-        people: "Jack Hyles, Peter Ruckman, Steven Anderson",
-        bible: "You read exclusively the King James Version (KJV) of 1769."
-      },
-      baptist: {
-        name: "Baptist",
-        beliefs: "You practice believer's baptism by full immersion, emphasize personal faith decisions, enjoy fellowship through potluck dinners, and value congregational autonomy. You believe in the priesthood of all believers and biblical authority.",
-        quote: "Therefore we were buried with Him through baptism into death, that just as Christ was raised from the dead by the glory of the Father, even so we also should walk in newness of life. (Romans 6:4, NKJV)",
-        people: "Charles Spurgeon, Martin Luther King Jr., Billy Graham",
-        bible: "You read the New International Version (NIV), English Standard Version (ESV), or King James Version (KJV)."
-      },
-      methodist: {
-        name: "Methodist",
-        beliefs: "You emphasize God's grace, social justice, and personal holiness. You appreciate John Wesley's theology of prevenient grace, practice infant baptism and open communion, and often sing Charles Wesley's hymns with enthusiasm.",
-        quote: "The best of all is, God is with us. (John Wesley's dying words)",
-        people: "John Wesley, Charles Wesley, Hillary Clinton",
-        bible: "You read the Common English Bible (CEB), New Revised Standard Version (NRSV), or New International Version (NIV)."
-      },
-      jainmonk: {
-        name: "Jain Monk/Ascetic",
-        beliefs: "You practice extreme ahimsa (non-violence), literally sweeping the ground before walking to avoid harming insects, wearing mouth coverings to prevent accidentally inhaling organisms, and eating only certain foods to minimize harm to living beings.",
-        quote: "Ahimsa paramo dharma - Non-violence is the highest religion. (Mahavira)",
-        people: "Mahavira, Acharya Tulsi, contemporary Jain ascetics"
-      },
-      harekrishna: {
-        name: "Hare Krishna (ISKCON)",
-        beliefs: "You worship Krishna as the Supreme Personality of Godhead, chant the Hare Krishna maha-mantra regularly, follow four regulative principles, and celebrate festivals like Janmashtami and Holi with great devotion and joy.",
-        quote: "Hare Krishna, Hare Krishna, Krishna Krishna, Hare Hare. Hare Rama, Hare Rama, Rama Rama, Hare Hare. (Maha Mantra)",
-        people: "A.C. Bhaktivedanta Swami Prabhupada, George Harrison"
-      },
-      shaivite: {
-        name: "Shaivite Hindu",
-        beliefs: "You worship Lord Shiva as the supreme deity, wear sacred rudraksha beads, fast on Mondays (Somwar), and celebrate Maha Shivaratri with great devotion. You may practice yoga and meditation as spiritual disciplines.",
-        quote: "Om Namah Shivaya - I bow to Shiva, the auspicious one.",
-        people: "Adi Shankara, Sadhguru Jaggi Vasudev"
-      },
-      hindu: {
-        name: "Hindu",
-        beliefs: "You believe in dharma, karma, and reincarnation, worship multiple deities as manifestations of Brahman, and follow various paths (yoga) to spiritual realization. You respect all religions as different paths to the same ultimate truth.",
-        quote: "Ekam sat vipra bahudha vadanti - Truth is one; the wise call it by various names. (Rig Veda 1.164.46)",
-        people: "Mahatma Gandhi, Swami Vivekananda, A. R. Rahman"
-      },
-      tibetanbuddhist: {
-        name: "Tibetan Buddhist",
-        beliefs: "You follow the Dalai Lama's teachings, meditate on emptiness and compassion, practice visualization of Buddhist deities, and work toward enlightenment for the benefit of all sentient beings. You may spin prayer wheels and chant mantras.",
-        quote: "If you want others to be happy, practice compassion. If you want to be happy, practice compassion. (Dalai Lama)",
-        people: "Dalai Lama, Thich Nhat Hanh, Pema Chödrön"
-      },
-      zenbuddhist: {
-        name: "Zen Buddhist",
-        beliefs: "You practice zazen (sitting meditation), appreciate the sudden enlightenment tradition, and value simplicity and mindfulness in daily life. You may study koans and appreciate the aesthetic of emptiness and naturalness.",
-        quote: "Sitting quietly, doing nothing, spring comes, and the grass grows by itself. (Zen proverb)",
-        people: "Dogen Zenji, Shunryu Suzuki, Alan Watts"
-      },
-      shinto: {
-        name: "Shinto",
-        beliefs: "You believe in kami (spirits) dwelling in natural objects, clap twice and bow before praying at shrines, and visit shrines especially at New Year for hatsumode. You appreciate ritual purity and harmony with nature.",
-        quote: "Even the wishes of an ant reach to heaven. (Shinto proverb)",
-        people: "Emperor Meiji, contemporary Shinto priests and practitioners"
-      },
-      wicca: {
-        name: "Wiccan / Modern Witch",
-        beliefs: "You practice witchcraft within an ethical framework, cast protective circles for rituals, worship both God and Goddess, celebrate the eight seasonal Sabbats, and keep a Book of Shadows with your personal spells and rituals.",
-        quote: "An it harm none, do what ye will. (The Wiccan Rede)",
-        people: "Gerald Gardner, Doreen Valiente, Scott Cunningham"
-      },
-      pastafarian: {
-        name: "Pastafarian (Church of the Flying Spaghetti Monster)",
-        beliefs: "You believe the Flying Spaghetti Monster created the world with His Noodly Appendage, wear a colander on your head as religious headwear, and use this parody religion to make points about religious freedom and science education.",
-        quote: "May you be touched by His Noodly Appendage. R'amen.",
-        people: "Bobby Henderson (founder and prophet)"
-      },
-      atheist: {
-        name: "Atheist / Secular Humanist",
-        beliefs: "You don't believe in any gods or supernatural beings, embrace scientific explanations for natural phenomena, celebrate human reason and achievement, and may observe secular holidays like Darwin Day or Freethought Day.",
-        quote: "The cosmos is within us. We are made of star-stuff. We are a way for the universe to know itself. (Carl Sagan)",
-        people: "Richard Dawkins, Carl Sagan, Neil deGrasse Tyson"
-      },
-      agnostic: {
-        name: "Agnostic",
-        beliefs: "You believe human knowledge is limited and we cannot know whether God exists or not. You embrace uncertainty, love philosophical discussions about unknowable questions, and remain open to possibilities while avoiding dogmatic claims.",
-        quote: "I do not pretend to know where many ignorant men are sure—that is all that agnosticism means. (Clarence Darrow)",
-        people: "Thomas Huxley, Carl Sagan, Neil deGrasse Tyson"
-      },
-      spiritualbutnotreligious: {
-        name: "Spiritual But Not Religious",
-        beliefs: "You believe in something greater than yourself but avoid organized religion, practice meditation or personal spirituality, read various spiritual texts eclectically, and create your own meaningful rituals. You value personal experience over doctrine.",
-        quote: "The divine is within you. Trust your inner wisdom.",
-        people: "Oprah Winfrey, Deepak Chopra, Eckhart Tolle"
-      }
-    };
+const results = {
+  orthodoxjew: {
+    name: "Orthodox Jew",
+    beliefs: "You meticulously keep kosher, follow halakha (Jewish law), observe Shabbat from Friday sundown to Saturday nightfall, and study Torah regularly. You value tradition, community, and maintaining ancient practices in modern times.",
+    quote: "Remember the Sabbath day, to keep it holy. Six days you shall labor and do all your work, but the seventh day is a Sabbath to the Lord your God. (Exodus 20:8-10)",
+    people: "Maimonides, Rabbi Jonathan Sacks, Elie Wiesel"
+  },
+  salafi: {
+    name: "Salafi Muslim",
+    beliefs: "You follow the most conservative interpretation of Sunni Islam, strictly avoiding music, images, and innovations not practiced by the first three generations of Muslims. You focus intensely on the Qur'an and authentic Sunnah.",
+    quote: "And hold firmly to the rope of Allah all together and do not become divided. And remember the favor of Allah upon you... (Qur'an 3:103)",
+    people: "Muhammad ibn Abd al-Wahhab, contemporary Salafi scholars"
+  },
+  sunni: {
+    name: "Sunni Muslim",
+    beliefs: "You follow the Five Pillars of Islam, pray five times daily facing Mecca, fast during Ramadan, and celebrate Eid with family and community. You follow the Sunnah of Prophet Muhammad and accept the first four Caliphs.",
+    quote: "Indeed, prayer prohibits immorality and wrongdoing, and the remembrance of Allah is greater. (Qur'an 29:45)",
+    people: "Malala Yousafzai, Muhammad Ali, Kareem Abdul-Jabbar"
+  },
+  adventist: {
+    name: "Seventh-day Adventist",
+    beliefs: "You worship on Saturday (the biblical Sabbath), follow biblical health principles avoiding unclean foods, and eagerly anticipate Jesus Christ's Second Coming. You emphasize prophecy, health, and education.",
+    quote: "Remember the Sabbath day, to keep it holy. (Exodus 20:8)",
+    people: "Desmond Doss, Ben Carson, Doug Batchelor",
+    bible: "You read the New King James Version (NKJV) or the Clear Word Bible, plus Ellen White's writings."
+  },
+  lds: {
+    name: "Latter-day Saint (Mormon)",
+    beliefs: "You believe in continuing revelation through modern prophets, accept the Book of Mormon as scripture alongside the Bible, wear sacred temple garments, and practice baptism for the dead. You emphasize family, missionary work, and eternal progression.",
+    quote: "If any of you lack wisdom, let him ask of God, that giveth to all men liberally... and it shall be given him. (James 1:5, from Joseph Smith's First Vision account)",
+    people: "Joseph Smith, Mitt Romney, Orrin Hatch",
+    bible: "You read the King James Version Bible and the Book of Mormon as companion scriptures."
+  },
+  roman_catholic: {
+    name: "Roman Catholic",
+    beliefs: "You believe in the Trinity, papal authority, seven sacraments, and transubstantiation. You venerate Mary and saints, attend Mass regularly, and appreciate traditional liturgy with incense, Latin, and Gregorian chant.",
+    quote: "For where two or three are gathered together in my name, there am I in the midst of them. (Matthew 18:20, Douay-Rheims)",
+    people: "Pope Francis, Mother Teresa, Thomas Aquinas",
+    bible: "You read the Douay-Rheims Bible, New American Bible, or Jerusalem Bible with deuterocanonical books."
+  },
+  russianorthodox: {
+    name: "Russian Orthodox Christian",
+    beliefs: "You venerate holy icons, participate in lengthy Divine Liturgies while standing, receive blessed bread (antidoron) after service, and follow the Julian calendar for religious holidays. You emphasize theosis (becoming like God) and mystical tradition.",
+    quote: "Christ is risen from the dead, trampling down death by death, and upon those in the tombs bestowing life! (Paschal Troparion)",
+    people: "Saint Sergius of Radonezh, Patriarch Kirill, Fyodor Dostoevsky",
+    bible: "You read the Orthodox Study Bible based on the Septuagint with Orthodox commentary."
+  },
+  mainlineprotestant: {
+    name: "Mainline Protestant",
+    beliefs: "You value historical Christian tradition balanced with modern scholarship, emphasize social justice and inclusivity, and appreciate liturgical worship with traditional hymns and organ music. You're open to biblical criticism and scientific understanding.",
+    quote: "But let justice roll down like waters, and righteousness like an ever-flowing stream. (Amos 5:24, NRSV)",
+    people: "Desmond Tutu, Dietrich Bonhoeffer, Martin Luther King Jr.",
+    bible: "You read the New Revised Standard Version (NRSV), Common English Bible, or NIV with study notes."
+  },
+  jwitness: {
+    name: "Jehovah's Witness",
+    beliefs: "You believe Jesus is God's first creation (not God himself), reject the Trinity doctrine, refuse blood transfusions, and actively share your beliefs door-to-door. You attend Kingdom Hall meetings and anticipate God's Kingdom on Earth.",
+    quote: "This means everlasting life, their coming to know you, the only true God, and the one whom you sent, Jesus Christ. (John 17:3, New World Translation)",
+    people: "Charles Taze Russell, Judge Rutherford, contemporary Governing Body members"
+  },
+  lutheran: {
+    name: "Lutheran",
+    beliefs: "You cherish Martin Luther's legacy, believe in salvation by grace alone through faith alone, practice infant baptism, and sing robust hymns like 'A Mighty Fortress Is Our God.' You appreciate both Word and Sacrament in worship.",
+    quote: "A mighty fortress is our God, a bulwark never failing. (Martin Luther hymn)",
+    people: "Martin Luther, Dietrich Bonhoeffer, Søren Kierkegaard",
+    bible: "You read the English Standard Version (ESV), New Revised Standard Version (NRSV), or Luther's German translation."
+  },
+  anglican: {
+    name: "Anglican/Episcopalian",
+    beliefs: "You follow the via media (middle way) between Catholicism and Protestantism, use the Book of Common Prayer, appreciate episcopal governance with bishops, and often enjoy British cultural traditions like tea and formal liturgy.",
+    quote: "Almighty God, unto whom all hearts are open, all desires known, and from whom no secrets are hid... (Book of Common Prayer)",
+    people: "Thomas Cranmer, Queen Elizabeth II, Desmond Tutu",
+    bible: "You read the New Revised Standard Version (NRSV) or retain affection for the King James Version."
+  },
+  presbyterian: {
+    name: "Presbyterian",
+    beliefs: "You believe in predestination and God's sovereignty, practice democratic church governance through elected presbyteries, and often celebrate Scottish heritage. You value education, confessional statements, and Reformed theology.",
+    quote: "The Lord is my shepherd; I shall not want. He maketh me to lie down in green pastures. (Psalm 23:1-2, KJV)",
+    people: "John Knox, John Calvin, Fred Rogers ('Mister Rogers')",
+    bible: "You read the New International Version (NIV), English Standard Version (ESV), or New American Standard Bible."
+  },
+  cofc: {
+    name: "Church of Christ",
+    beliefs: "You practice a cappella singing only (no instrumental music), emphasize New Testament Christianity, practice weekly communion, and often simply call your congregation 'the church.' You believe in baptism by immersion for salvation.",
+    quote: "Speaking to one another with psalms, hymns, and songs from the Spirit. Sing and make music from your heart to the Lord. (Ephesians 5:19, NIV)",
+    people: "Alexander Campbell, Max Lucado, Rubel Shelly",
+    bible: "You read the New American Standard Bible (NASB), English Standard Version (ESV), or New King James Version."
+  },
+  pentecostal: {
+    name: "Pentecostal/Charismatic",
+    beliefs: "You believe in baptism in the Holy Spirit evidenced by speaking in tongues, practice divine healing and prophecy, and enjoy contemporary worship with electric instruments. You emphasize spiritual gifts and personal relationship with Jesus.",
+    quote: "And they were all filled with the Holy Spirit and began to speak in other tongues as the Spirit enabled them. (Acts 2:4, NIV)",
+    people: "William J. Seymour, Oral Roberts, T.D. Jakes",
+    bible: "You read the New King James Version (NKJV), New International Version (NIV), or Amplified Bible."
+  },
+  kjvonly: {
+    name: "KJV-Only Baptist",
+    beliefs: "You believe the King James Version is the only accurate English Bible, reject all modern translations as corruptions, and prefer traditional Baptist preaching and hymns. You're often fundamentalist in theology and separatist in practice.",
+    quote: "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life. (John 3:16, KJV)",
+    people: "Jack Hyles, Peter Ruckman, Steven Anderson",
+    bible: "You read exclusively the King James Version (KJV) of 1769."
+  },
+  baptist: {
+    name: "Baptist",
+    beliefs: "You practice believer's baptism by full immersion, emphasize personal faith decisions, enjoy fellowship through potluck dinners, and value congregational autonomy. You believe in the priesthood of all believers and biblical authority.",
+    quote: "Therefore we were buried with Him through baptism into death, that just as Christ was raised from the dead by the glory of the Father, even so we also should walk in newness of life. (Romans 6:4, NKJV)",
+    people: "Charles Spurgeon, Martin Luther King Jr., Billy Graham",
+    bible: "You read the New International Version (NIV), English Standard Version (ESV), or King James Version (KJV)."
+  },
+  methodist: {
+    name: "Methodist",
+    beliefs: "You emphasize God's grace, social justice, and personal holiness. You appreciate John Wesley's theology of prevenient grace, practice infant baptism and open communion, and often sing Charles Wesley's hymns with enthusiasm.",
+    quote: "The best of all is, God is with us. (John Wesley's dying words)",
+    people: "John Wesley, Charles Wesley, Hillary Clinton",
+    bible: "You read the Common English Bible (CEB), New Revised Standard Version (NRSV), or New International Version (NIV)."
+  },
+  jainmonk: {
+    name: "Jain Monk/Ascetic",
+    beliefs: "You practice extreme ahimsa (non-violence), literally sweeping the ground before walking to avoid harming insects, wearing mouth coverings to prevent accidentally inhaling organisms, and eating only certain foods to minimize harm to living beings.",
+    quote: "Ahimsa paramo dharma - Non-violence is the highest religion. (Mahavira)",
+    people: "Mahavira, Acharya Tulsi, contemporary Jain ascetics"
+  },
+  jain: {
+    name: "Jain",
+    beliefs: "You practice ahimsa (non-violence) toward all living beings, follow strict vegetarian diet avoiding root vegetables, and believe in karma and liberation of the soul. You may fast regularly and visit Jain temples for worship.",
+    quote: "All beings hate pain; therefore, one should not kill them. (Acharanga Sutra)",
+    people: "Mahavira, Rishabhanatha, modern Jain community leaders"
+  },
+  harekrishna: {
+    name: "Hare Krishna (ISKCON)",
+    beliefs: "You worship Krishna as the Supreme Personality of Godhead, chant the Hare Krishna maha-mantra regularly, follow four regulative principles, and celebrate festivals like Janmashtami and Holi with great devotion and joy.",
+    quote: "Hare Krishna, Hare Krishna, Krishna Krishna, Hare Hare. Hare Rama, Hare Rama, Rama Rama, Hare Hare. (Maha Mantra)",
+    people: "A.C. Bhaktivedanta Swami Prabhupada, George Harrison"
+  },
+  shaivite: {
+    name: "Shaivite Hindu",
+    beliefs: "You worship Lord Shiva as the supreme deity, wear sacred rudraksha beads, fast on Mondays (Somwar), and celebrate Maha Shivaratri with great devotion. You may practice yoga and meditation as spiritual disciplines.",
+    quote: "Om Namah Shivaya - I bow to Shiva, the auspicious one.",
+    people: "Adi Shankara, Sadhguru Jaggi Vasudev"
+  },
+  hindu: {
+    name: "Hindu",
+    beliefs: "You believe in dharma, karma, and reincarnation, worship multiple deities as manifestations of Brahman, and follow various paths (yoga) to spiritual realization. You respect all religions as different paths to the same ultimate truth.",
+    quote: "Ekam sat vipra bahudha vadanti - Truth is one; the wise call it by various names. (Rig Veda 1.164.46)",
+    people: "Mahatma Gandhi, Swami Vivekananda, A. R. Rahman"
+  },
+  tibetanbuddhist: {
+    name: "Tibetan Buddhist",
+    beliefs: "You follow the Dalai Lama's teachings, meditate on emptiness and compassion, practice visualization of Buddhist deities, and work toward enlightenment for the benefit of all sentient beings. You may spin prayer wheels and chant mantras.",
+    quote: "If you want others to be happy, practice compassion. If you want to be happy, practice compassion. (Dalai Lama)",
+    people: "Dalai Lama, Thich Nhat Hanh, Pema Chödrön"
+  },
+  theravadabuddhist: {
+    name: "Theravada Buddhist",
+    beliefs: "You follow the oldest surviving Buddhist tradition, focus on individual liberation through the Noble Eightfold Path, practice Vipassana meditation, and study the Pali Canon. You emphasize personal responsibility for enlightenment.",
+    quote: "Better than a thousand hollow words is one word that brings peace. (Dhammapada 100)",
+    people: "Buddha, Ajahn Chah, S.N. Goenka"
+  },
+  zenbuddhist: {
+    name: "Zen Buddhist",
+    beliefs: "You practice zazen (sitting meditation), appreciate the sudden enlightenment tradition, and value simplicity and mindfulness in daily life. You may study koans and appreciate the aesthetic of emptiness and naturalness.",
+    quote: "Sitting quietly, doing nothing, spring comes, and the grass grows by itself. (Zen proverb)",
+    people: "Dogen Zenji, Shunryu Suzuki, Alan Watts"
+  },
+  shinto: {
+    name: "Shinto",
+    beliefs: "You believe in kami (spirits) dwelling in natural objects, clap twice and bow before praying at shrines, and visit shrines especially at New Year for hatsumode. You appreciate ritual purity and harmony with nature.",
+    quote: "Even the wishes of an ant reach to heaven. (Shinto proverb)",
+    people: "Emperor Meiji, contemporary Shinto priests and practitioners"
+  },
+  wicca: {
+    name: "Wiccan / Modern Witch",
+    beliefs: "You practice witchcraft within an ethical framework, cast protective circles for rituals, worship both God and Goddess, celebrate the eight seasonal Sabbats, and keep a Book of Shadows with your personal spells and rituals.",
+    quote: "An it harm none, do what ye will. (The Wiccan Rede)",
+    people: "Gerald Gardner, Doreen Valiente, Scott Cunningham"
+  },
+  neopagan: {
+    name: "Neo-Pagan",
+    beliefs: "You follow earth-based spirituality drawing from various ancient traditions, celebrate seasonal cycles, honor multiple deities or nature spirits, and practice rituals connecting you to natural rhythms. You may blend different pagan traditions.",
+    quote: "We are not going to be able to operate our Spaceship Earth successfully nor for much longer unless we see it as a whole spaceship and our fate as common. (Buckminster Fuller)",
+    people: "Starhawk, Isaac Bonewits, modern Druid and pagan leaders"
+  },
+  pastafarian: {
+    name: "Pastafarian (Church of the Flying Spaghetti Monster)",
+    beliefs: "You believe the Flying Spaghetti Monster created the world with His Noodly Appendage, wear a colander on your head as religious headwear, and use this parody religion to make points about religious freedom and science education.",
+    quote: "May you be touched by His Noodly Appendage. R'amen.",
+    people: "Bobby Henderson (founder and prophet)"
+  },
+  atheist: {
+    name: "Atheist / Secular Humanist",
+    beliefs: "You don't believe in any gods or supernatural beings, embrace scientific explanations for natural phenomena, celebrate human reason and achievement, and may observe secular holidays like Darwin Day or Freethought Day.",
+    quote: "The cosmos is within us. We are made of star-stuff. We are a way for the universe to know itself. (Carl Sagan)",
+    people: "Richard Dawkins, Carl Sagan, Neil deGrasse Tyson"
+  },
+  agnostic: {
+    name: "Agnostic",
+    beliefs: "You believe human knowledge is limited and we cannot know whether God exists or not. You embrace uncertainty, love philosophical discussions about unknowable questions, and remain open to possibilities while avoiding dogmatic claims.",
+    quote: "I do not pretend to know where many ignorant men are sure—that is all that agnosticism means. (Clarence Darrow)",
+    people: "Thomas Huxley, Carl Sagan, Neil deGrasse Tyson"
+  },
+  spiritualbutnotreligious: {
+    name: "Spiritual But Not Religious",
+    beliefs: "You believe in something greater than yourself but avoid organized religion, practice meditation or personal spirituality, read various spiritual texts eclectically, and create your own meaningful rituals. You value personal experience over doctrine.",
+    quote: "The divine is within you. Trust your inner wisdom.",
+    people: "Oprah Winfrey, Deepak Chopra, Eckhart Tolle"
+  }
+};
 
     function showQuestion(index) {
       const question = questions[index];
