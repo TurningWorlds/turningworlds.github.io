@@ -110,13 +110,15 @@
       padding: 8px 20px;
       font-size: 0.9rem;
       margin-top: 16px;
+      display: inline-block;
     }
-    .btn-back:hover {
+    .btn-back:hover:not(:disabled) {
       background: #5a6268;
     }
     .btn-back:disabled {
       background: #ccc;
       cursor: not-allowed;
+      opacity: 0.6;
     }
     .result {
       margin-top: 24px;
@@ -182,10 +184,10 @@
 
   <script>
     let currentQuestion = 0;
-    let questionHistory = []; // Track question path for back button
-    let totalQuestions = 29; // Total number of questions in the flowchart
+    let questionHistory = [];
+    let totalQuestions = 29;
+    let questionsAnswered = 0;
 
-    // Fixed flowchart questions with proper structure - starting with belief in higher power
     const questions = [
       {
         text: "Do you believe in a higher power, divine being, or supreme force that governs the universe?",
@@ -194,182 +196,181 @@
         no: 25
       },
       {
-        text: "Do you believe this higher power gave specific dietary laws, like avoiding pork, shellfish, or mixing certain foods?",
+        text: "Do you believe this higher power gave specific dietary laws, like avoiding pork or shellfish?",
         explain: "This asks if you follow dietary laws found in Judaism, Islam, Seventh-day Adventism, or some Christian sects.",
         yes: 2,
         no: 9
       },
       {
-        text: "Do you meticulously avoid mixing meat and dairy in the same meal, and check every food label for kosher certification?",
-        explain: "This is a uniquely Jewish kosher law that goes beyond just avoiding pork.",
+        text: "Do you meticulously avoid mixing meat and dairy in the same meal?",
+        explain: "This is a uniquely Jewish kosher law (kashrut) that goes beyond just avoiding pork.",
         yes: "orthodoxjew",
         no: 3
       },
       {
-        text: "Do you break your daily Ramadan fast with dates, pray five times facing Mecca, and say 'Bismillah' before meals?",
-        explain: "These are specific Islamic practices that go beyond basic prayer.",
+        text: "Do you break your daily Ramadan fast with dates?",
+        explain: "This is a specific Islamic practice during the holy month of Ramadan.",
         yes: 4,
         no: 5
       },
       {
-        text: "Do you belong to a group that strictly avoids all music and images in worship, calling them forbidden innovations?",
-        explain: "This is characteristic of very conservative Islamic groups like Salafis.",
+        text: "Do you belong to a group that strictly avoids all music in worship?",
+        explain: "This is characteristic of very conservative Islamic groups like Salafis who consider music a forbidden innovation.",
         yes: "salafi",
         no: "sunni"
       },
       {
-        text: "Do you worship on Saturday specifically, avoid all caffeine and alcohol, and bring a famous green bean casserole to potlucks?",
-        explain: "This is a very Seventh-day Adventist thing, especially the Saturday worship and health message.",
+        text: "Do you worship on Saturday specifically (not Sunday)?",
+        explain: "Saturday worship is distinctive of Seventh-day Adventism, which observes the biblical Sabbath.",
         yes: "adventist",
         no: 6
       },
       {
-        text: "Do you wear sacred garments under your regular clothes daily and believe in baptizing deceased ancestors by proxy?",
-        explain: "These are distinctive practices of Latter-day Saints (Mormons). Note that not all members wear garments - typically those who have been through the temple (often before missions or marriage).",
+        text: "Do you wear sacred garments under your regular clothes daily?",
+        explain: "These are distinctive temple garments worn by Latter-day Saints (Mormons) who have been through the temple ceremony, typically before missions or marriage.",
         yes: "lds",
         no: 7
       },
       {
-        text: "Do you believe the Eucharist literally transforms into Christ's actual body and blood, and you get excited about the smell of incense?",
-        explain: "This transubstantiation belief is very Catholic and Orthodox, but incense love is especially Eastern.",
+        text: "Do you believe the Eucharist literally transforms into Christ's actual body and blood?",
+        explain: "This transubstantiation belief is central to Catholic and Orthodox theology, distinguishing them from Protestant views.",
         yes: 8,
         no: "mainlineprotestant"
       },
       {
-        text: "Do you venerate painted icons, stand for 2+ hour liturgies, and eagerly eat blessed bread (antidoron) after Divine Liturgy?",
-        explain: "These are classic Eastern Orthodox practices that distinguish them from Western Christianity.",
+        text: "Do you venerate painted icons as windows to the divine?",
+        explain: "Icon veneration is a classic Eastern Orthodox practice that distinguishes them from Western Christianity.",
         yes: "russianorthodox",
         no: "roman_catholic"
       },
       {
-        text: "Do you believe Jesus is God's first created being (not God himself), and you spend weekends going door-to-door with Watchtower magazines?",
-        explain: "This is a hallmark belief and practice of Jehovah's Witnesses.",
+        text: "Do you believe Jesus is God's first created being (not God himself)?",
+        explain: "This non-Trinitarian belief is a hallmark of Jehovah's Witnesses theology.",
         yes: "jwitness",
         no: 10
       },
       {
-        text: "Do you believe in the Trinity doctrine and sing traditional hymns accompanied by a massive pipe organ every Sunday?",
-        explain: "This is typical of mainline Protestant churches with their liturgical traditions.",
+        text: "Do you sing traditional hymns accompanied by a massive pipe organ?",
+        explain: "This is typical of mainline Protestant churches with their traditional liturgical worship.",
         yes: 11,
         no: 14
       },
       {
-        text: "Do you baptize infants by sprinkling, recite ancient creeds from memory, and decorate with Advent wreaths at Christmas?",
-        explain: "This is a Lutheran and Anglican liturgical tradition.",
+        text: "Do you baptize infants by sprinkling (not full immersion)?",
+        explain: "This is a Lutheran and Anglican liturgical tradition that differs from Baptist full immersion.",
         yes: 12,
         no: 13
       },
       {
-        text: "Do you absolutely love Martin Luther, sing 'A Mighty Fortress Is Our God' with gusto, and serve bratwurst at every church picnic?",
-        explain: "This is classic Lutheran culture and German heritage.",
+        text: "Do you absolutely love Martin Luther's teachings?",
+        explain: "This is classic Lutheran theological identity, centered on the Reformation leader.",
         yes: "lutheran",
         no: "anglican"
       },
       {
-        text: "Do you have bishops in fancy robes, love afternoon tea and scones, and sometimes call yourself 'Episcopalian' in America?",
-        explain: "This is the Anglican/Episcopal tradition with its English heritage.",
+        text: "Do you have bishops in fancy robes leading your services?",
+        explain: "This is the Anglican/Episcopal tradition with its episcopal (bishop-led) governance structure.",
         yes: "anglican",
         no: "presbyterian"
       },
       {
-        text: "Do you firmly believe in predestination, have elected elders instead of appointed bishops, and proudly celebrate your Scottish heritage?",
-        explain: "This is the Presbyterian tradition with its Calvinist theology.",
+        text: "Do you firmly believe in predestination (that God has already chosen who will be saved)?",
+        explain: "This is the Presbyterian Calvinist theological tradition emphasizing God's sovereignty.",
         yes: "presbyterian",
         no: 15
       },
       {
-        text: "Do you completely avoid all musical instruments in worship, believing they're unbiblical, and simply call your congregation 'the church'?",
-        explain: "This is typical of Churches of Christ and their a cappella tradition.",
+        text: "Do you completely avoid all musical instruments in worship?",
+        explain: "This a cappella tradition is typical of Churches of Christ, who believe instruments are unbiblical.",
         yes: "cofc",
         no: 16
       },
       {
-        text: "Do you believe in speaking in tongues as evidence of baptism in the Holy Spirit, practice divine healing, and worship with electric guitars and drums?",
+        text: "Do you believe in speaking in tongues as evidence of baptism in the Holy Spirit?",
         explain: "This is classic Pentecostal/Charismatic Christianity with its emphasis on spiritual gifts.",
         yes: "pentecostal",
         no: 17
       },
       {
-        text: "Do you insist on adult baptism by complete immersion, have legendary church potluck dinners, and call your pastor 'Brother'?",
-        explain: "This is a Baptist thing with their distinctive baptism and fellowship practices.",
+        text: "Do you insist on adult baptism by complete immersion (not infant baptism)?",
+        explain: "This is a Baptist distinctive belief about baptism requiring a personal faith decision.",
         yes: 18,
         no: 19
       },
       {
-        text: "Do you firmly believe the King James Bible is the only perfect English translation and get suspicious of all modern versions?",
+        text: "Do you firmly believe the King James Bible is the only perfect English translation?",
         explain: "This is a distinctive of King James Only Baptists and fundamentalists.",
         yes: "kjvonly",
         no: "baptist"
       },
       {
-        text: "Do you believe in the Real Presence of Christ in Communion but reject the Catholic doctrine of transubstantiation?",
+        text: "Do you believe in the Real Presence of Christ in Communion but reject transubstantiation?",
         explain: "This is a specifically Lutheran sacramental belief that differs from both Catholic and Protestant views.",
         yes: "lutheran",
         no: "methodist"
       },
       {
-        text: "Do you believe in karma and reincarnation, and completely avoid eating onions, garlic, and anything that grows underground?",
-        explain: "This specific dietary restriction points to Jainism or certain strict Hindu practices.",
+        text: "Do you believe in karma and reincarnation?",
+        explain: "These core beliefs point to Dharmic religions like Hinduism, Buddhism, or Jainism.",
         yes: 20,
         no: 23
       },
       {
-        text: "Do you literally sweep the ground before walking to avoid stepping on insects, and wear a cloth mask to prevent accidentally inhaling tiny organisms?",
-        explain: "This is the extreme non-violence practice of Jain ascetics and monks.",
+        text: "Do you literally sweep the ground before walking to avoid stepping on insects?",
+        explain: "This is the extreme non-violence (ahimsa) practice of Jain ascetics and monks.",
         yes: "jainmonk",
         no: 21
       },
       {
-        text: "Do you worship Krishna as the supreme deity, chant 'Hare Krishna' regularly, and throw colored powder during Holi festival?",
-        explain: "This is the ISKCON (Hare Krishna) movement with its devotional practices.",
+        text: "Do you worship Krishna as the supreme deity?",
+        explain: "This is the ISKCON (Hare Krishna) movement with its devotional focus on Krishna.",
         yes: "harekrishna",
         no: 22
       },
       {
-        text: "Do you worship Lord Shiva as supreme, fast every Monday, and wear rudraksha beads as sacred jewelry?",
+        text: "Do you worship Lord Shiva as the supreme deity?",
         explain: "These are specific Shaivite Hindu practices focused on Shiva worship.",
         yes: "shaivite",
         no: "hindu"
       },
       {
-        text: "Do you meditate daily on the concept of emptiness, eat only vegetarian food, and wear maroon or saffron robes?",
-        explain: "This describes Tibetan Buddhist monastic life and philosophy.",
+        text: "Do you meditate daily on the concept of emptiness (sunyata)?",
+        explain: "This describes Tibetan Buddhist monastic philosophy focused on emptiness and compassion.",
         yes: "tibetanbuddhist",
         no: 24
       },
       {
-        text: "Do you practice zazen (sitting meditation), believe enlightenment comes suddenly, and ring a bell to begin meditation sessions?",
-        explain: "This is specifically Zen Buddhist practice and philosophy.",
+        text: "Do you practice zazen (sitting meditation) regularly?",
+        explain: "This is specifically Zen Buddhist meditation practice and philosophy.",
         yes: "zenbuddhist",
         no: "shinto"
       },
       {
-        text: "Are you drawn to nature-based spirituality, cast protective circles for rituals, and celebrate the eight Sabbats including Beltane and Samhain?",
-        explain: "This describes Wiccan and modern pagan practices.",
+        text: "Are you drawn to nature-based spirituality with ritual practices?",
+        explain: "This describes Wiccan and modern pagan practices involving ritual circles and seasonal celebrations.",
         yes: 26,
         no: 27
       },
       {
-        text: "Do you call yourself a witch, worship both a God and Goddess, and keep a Book of Shadows with your spells and rituals?",
-        explain: "This is specifically Wiccan practice and belief system.",
+        text: "Do you call yourself a witch?",
+        explain: "This is specifically Wiccan practice and self-identification with witchcraft traditions.",
         yes: "wicca",
         no: "spiritualbutnotreligious"
       },
       {
-        text: "Do you think religion is mostly harmful to society, celebrate Darwin Day with enthusiasm, and prefer scientific explanations for everything?",
-        explain: "This describes a more activist atheist or secular humanist position.",
+        text: "Do you think religion is mostly harmful to society?",
+        explain: "This describes a more activist atheist or anti-theist position beyond simple non-belief.",
         yes: "atheist",
         no: 28
       },
       {
-        text: "Do you think the ultimate answer to questions about God's existence is 'we simply cannot know,' and you love philosophical debates about unknowable things?",
-        explain: "This is classic agnosticism - the position that divine knowledge is unknowable.",
+        text: "Do you think the ultimate answer to questions about God's existence is 'we simply cannot know'?",
+        explain: "This is classic agnosticism - the position that divine knowledge is unknowable or uncertain.",
         yes: "agnostic",
         no: "pastafarian"
       }
     ];
 
-    // Complete results object
     const results = {
       orthodoxjew: {
         name: "Orthodox Jew",
@@ -540,7 +541,7 @@
         quote: "May you be touched by His Noodly Appendage. R'amen.",
         people: "Bobby Henderson (founder and prophet)"
       },
-            atheist: {
+      atheist: {
         name: "Atheist / Secular Humanist",
         beliefs: "You don't believe in any gods or supernatural beings, embrace scientific explanations for natural phenomena, celebrate human reason and achievement, and may observe secular holidays like Darwin Day or Freethought Day.",
         quote: "The cosmos is within us. We are made of star-stuff. We are a way for the universe to know itself. (Carl Sagan)",
@@ -560,98 +561,120 @@
       }
     };
 
-  function showQuestion(index) {
-  const question = questions[index];
-  const questionSection = document.getElementById('question-section');
-  
-  questionSection.innerHTML = `
-    <div class="question">${question.text}</div>
-    <div class="dropdown">
-      <details>
-        <summary>Why this question?</summary>
-        <p>${question.explain}</p>
-      </details>
-    </div>
-  `;
-}
+    function showQuestion(index) {
+      const question = questions[index];
+      const questionSection = document.getElementById('question-section');
+      const questionCounter = document.getElementById('question-counter');
+      const backBtn = document.getElementById('back-btn');
+      
+      questionCounter.textContent = `Question ${questionsAnswered + 1} of ${totalQuestions}`;
+      backBtn.disabled = questionHistory.length === 0;
+      
+      questionSection.innerHTML = `
+        <div class="question">${question.text}</div>
+        <div class="dropdown">
+          <details>
+            <summary>Why this question?</summary>
+            <p>${question.explain}</p>
+          </details>
+        </div>
+      `;
+    }
 
-function showResult(resultKey) {
-  const result = results[resultKey];
-  const resultSection = document.getElementById('result-section');
-  const btnGroup = document.getElementById('btn-group');
-  
-  btnGroup.style.display = 'none';
-  
-  let resultHTML = `
-    <div class="result">
-      <strong>${result.name}</strong>
-      <p>${result.beliefs}</p>
-      <blockquote>${result.quote}</blockquote>
-      <p><strong>Notable People:</strong> ${result.people}</p>
-  `;
-  
-  if (result.bible) {
-    resultHTML += `<p><strong>Scripture:</strong> ${result.bible}</p>`;
-  }
-  
-  resultHTML += `
-      <button class="restart-btn" onclick="restart()">Take Quiz Again</button>
-    </div>
-  `;
-  
-  resultSection.innerHTML = resultHTML;
-}
+    function showResult(resultKey) {
+      const result = results[resultKey];
+      const resultSection = document.getElementById('result-section');
+      const btnGroup = document.getElementById('btn-group');
+      const backBtn = document.getElementById('back-btn');
+      const questionCounter = document.getElementById('question-counter');
+      
+      btnGroup.style.display = 'none';
+      backBtn.style.display = 'none';
+      questionCounter.style.display = 'none';
+      
+      let resultHTML = `
+        <div class="result">
+          <strong>${result.name}</strong>
+          <p>${result.beliefs}</p>
+          <blockquote>${result.quote}</blockquote>
+          <p><strong>Notable People:</strong> ${result.people}</p>
+      `;
+      
+      if (result.bible) {
+        resultHTML += `<p><strong>Scripture:</strong> ${result.bible}</p>`;
+      }
+      
+      resultHTML += `
+          <button class="restart-btn" onclick="restart()">Take Quiz Again</button>
+        </div>
+      `;
+      
+      resultSection.innerHTML = resultHTML;
+    }
 
-function answer(isYes) {
-  const question = questions[currentQuestion];
-  const nextStep = isYes ? question.yes : question.no;
-  
-  if (typeof nextStep === 'string') {
-    // It's a result key
-    showResult(nextStep);
-  } else {
-    // It's a question index
-    currentQuestion = nextStep;
-    showQuestion(currentQuestion);
-  }
-}
+    function answer(isYes) {
+      const question = questions[currentQuestion];
+      const nextStep = isYes ? question.yes : question.no;
+      
+      questionHistory.push({
+        questionIndex: currentQuestion,
+        answerWasYes: isYes
+      });
+      
+      questionsAnswered++;
+      
+      if (typeof nextStep === 'string') {
+        showResult(nextStep);
+      } else {
+        currentQuestion = nextStep;
+        showQuestion(currentQuestion);
+      }
+    }
 
-function restart() {
-  currentQuestion = 0;
-  document.getElementById('result-section').innerHTML = '';
-  document.getElementById('btn-group').style.display = 'flex';
-  showQuestion(currentQuestion);
-}
+    function restart() {
+      currentQuestion = 0;
+      questionsAnswered = 0;
+      questionHistory = [];
+      
+      document.getElementById('result-section').innerHTML = '';
+      document.getElementById('btn-group').style.display = 'flex';
+      document.getElementById('back-btn').style.display = 'inline-block';
+      document.getElementById('question-counter').style.display = 'inline-block';
+      
+      showQuestion(currentQuestion);
+    }
 
-function goBack() {
-  if (window.history.length > 1) {
-    window.history.back();
-  } else {
-    // No history — fallback action, e.g., redirect to homepage
-    window.location.href = '/'; // Change '/' to any default page URL
-  }
-}
+    function goBack() {
+      if (questionHistory.length === 0) {
+        return;
+      }
+      
+      const lastState = questionHistory.pop();
+      currentQuestion = lastState.questionIndex;
+      questionsAnswered--;
+      
+      showQuestion(currentQuestion);
+    }
 
-function setupEventListeners() {
-  const yesBtn = document.getElementById('yes-btn');
-  const noBtn = document.getElementById('no-btn');
-  
-  if (yesBtn && noBtn) {
-    yesBtn.addEventListener('click', function() {
-      answer(true);
+    function setupEventListeners() {
+      const yesBtn = document.getElementById('yes-btn');
+      const noBtn = document.getElementById('no-btn');
+      
+      if (yesBtn && noBtn) {
+        yesBtn.addEventListener('click', function() {
+          answer(true);
+        });
+        
+        noBtn.addEventListener('click', function() {
+          answer(false);
+        });
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      showQuestion(currentQuestion);
+      setupEventListeners();
     });
-    
-    noBtn.addEventListener('click', function() {
-      answer(false);
-    });
-  }
-}
-
-// Initialize the quiz when page loads
-document.addEventListener('DOMContentLoaded', function() {
-  showQuestion(currentQuestion);
-  setupEventListeners();
-});
   </script>
 </body>
 </html>
